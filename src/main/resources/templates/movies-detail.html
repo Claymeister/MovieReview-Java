@@ -1,48 +1,122 @@
 <html
         xmlns:th="http://thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+        layout:decorate="~{layout}"
+        xmlns:sec="http://www.thymeleaf.org">
 <head>
-  <title>Movie Create</title>
+    <title>Movie Create</title>
 </head>
 <body class="d-flex flex-column">
 
-  <section layout:fragment="body">
+<section layout:fragment="body">
     <!-- Page content-->
     <div class="container mt-5 mb-5">
-      <div class="row">
-        <!-- Blog entries-->
-        <div class="col-lg-8">
-          <!-- Featured blog post-->
-          <div class="card mb-4">
-            <a href="#!"><img class="card-img-top" th:src="${movie.photoUrl}" alt="..." width="300" /></a>
-            <div class="card-body">
-              <div class="small text-muted" th:text="${movie.updatedOn}"></div>
-              <h2 class="card-title" th:text="${movie.title}">About this movie</h2>
-              <p class="card-text" th:text="${movie.content}"></p>
-              <div th:if="${user.id} == ${movie.createdBy.id}">
-                <a class="btn btn-primary " th:href="@{/movies/{movieId}/delete(movieId=${movie.id})}">Delete</a>
-              </div>
-              <a class="btn btn-primary " th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Create Review</a>
+        <div class="row">
+            <!-- Blog entries-->
+            <!-- Featured blog post-->
+            <style>
+                .table td {vertical-align: middle;}
+                .table .btn {vertical-align: middle;}
+            </style>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Poster</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <a th:href="${movie.photoUrl}"><img  th:src="${movie.photoUrl}" alt="..." class="img-fluid rounded-3" width="300"></a>
+                    </td>
+                    <td th:text="${movie.content}"></td>
+                    <td>
+                        <div th:if="${user.id} == ${movie.createdBy.id}">
+                            <div sec:authorize="!hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                            </div>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                            <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/delete(movieId=${movie.id})}">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Release Date</th>
+                    <th>Last Updated</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${movie.title}">Title</td>
+                    <td th:text="${movie.genre}">Genre</td>
+                    <td th:text="${movie.releaseDate}">Release Date</td>
+                    <td th:text="${movie.updatedOn}">Updated</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="text-center mt-3 mb-3">
+                <h1 class="fw-bolder">Reviews</h1>
             </div>
-          </div>
-          <!-- Nested row for non-featured blog posts-->
-          <div class="row">
-            <div class="col-md-6">
-              <!-- Blog post-->
-              <div th:each="review :${movie.reviews}" class="card mb-4">
-                <div class="card-body">
-                  <div class="small text-muted" th:text="${review.createdBy.username + ' - ' + review.updatedOn}">Date</div>
-                  <h2 th:text="${review.score + '/10: ' + review.title}" class="card-title h4"></h2>
-                  <p class="card-text" th:text="${review.content}">Not much said.</p>
-                  <a class="btn btn-primary " th:href="@{/reviews/{reviewId}(reviewId=${review.id})}">More</a>
+            <div class="col-lg-12">
+                <div sec:authorize="hasRole('ROLE_USER')">
+                <a class="btn btn-primary mt-2 mb-2 w-100" th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Add your own Review</a>
                 </div>
-              </div>
             </div>
-          </div>
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row">
+                <!-- Blog post-->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Movie</th>
+                        <th>Score</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Last Updated</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="review : ${movie.reviews}">
+                        <td th:text="${review.createdBy.username}"></td>
+                        <td th:text="${review.movie.title}"></td>
+                        <td th:text="${review.score}"></td>
+                        <td th:text="${review.title}"></td>
+                        <td th:text="${review.content}"></td>
+                        <td th:text="${review.updatedOn}"></td>
+                        <td>
+                            <a th:href="@{/reviews/{reviewId}(reviewId=${review.id})}"
+                               class="btn btn-primary">View-tbr</a>
+                            <div th:if="${user.id} == ${review.createdBy.id}">
+                                <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}"
+                                   class="btn btn-primary mt-2">Edit</a>
+                                <div sec:authorize="!hasRole('ROLE_ADMIN')">
+                                    <a class="btn btn-primary mt-2"
+                                       th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+                                </div>
+                            </div>
+                            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-primary mt-2"
+                                   th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 </body>
 </html>
