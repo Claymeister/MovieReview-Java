@@ -99,6 +99,7 @@ public class ReviewController {
         ReviewDto reviewDto = reviewService.findByReviewId(reviewId);
         review.setId(reviewId);
         review.setMovie(reviewDto.getMovie());
+        review.setCreatedBy(reviewDto.getCreatedBy());
         reviewService.updateReview(review);
         return "redirect:/reviews";
     }

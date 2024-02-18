@@ -1,7 +1,6 @@
-<html
-        xmlns:th="http://thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
   <title>Movie Create</title>
 </head>
@@ -9,44 +8,65 @@
 <main class="flex-shrink-0">
   <section layout:fragment="body" class="py-5">
     <div class="container">
-    <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="title">Title</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  th:field="*{title}"
-                  placeholder="Title">
-          <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+      <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="title">Title</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="title"
+                    name="title"
+                    th:field="*{title}"
+                    placeholder="Title">
+            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="genre">Genre</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="genre"
+                    name="genre"
+                    th:field="*{genre}"
+                    placeholder="Genre">
+            <p th:if="${#fields.hasErrors('genre')}" class="text-danger" th:errors="*{genre}"></p>
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Release Date</label>
+            <input
+                    type="date"
+                    class="form-control"
+                    id="releaseDate"
+                    name="releaseDate"
+                    th:field="*{releaseDate}">
+            <p th:if="${#fields.hasErrors('releaseDate')}" class="text-danger" th:errors="*{releaseDate}"></p>
+          </div>
+          <div class="form-group">
+            <label for="photoUrl">Poster Photo URL</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="photoUrl"
+                    name="photoUrl"
+                    th:field="*{photoUrl}"
+                    placeholder="Link to the photo of the movie's poster">
+            <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
+          </div>
+          <div class="form-group mb-3">
+            <label for="content">Description</label>
+            <textarea
+                    type="text"
+                    class="form-control"
+                    id="content"
+                    name="content"
+                    th:field="*{content}"
+                    placeholder="What's the movie about?"></textarea>
+            <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+          </div>
         </div>
-        <div class="form-group col-md-6">
-          <label for="photoUrl">Photourl</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="photoUrl"
-                  name="photoUrl"
-                  th:field="*{photoUrl}"
-                  placeholder="Photo Url">
-          <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
-        </div>
-      </div>
-      <div class="form-group mb-3">
-        <label for="content">Content</label>
-        <input
-                type="text"
-                class="form-control"
-                id="content"
-                name="content"
-                th:field="*{content}"
-                placeholder="1234 Main St">
-        <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
-      </div>
-      <button type="submit" class="btn btn-primary">Create</button>
-    </form>
+        <button type="submit" class="btn btn-primary ms-2">Create</button>
+      </form>
     </div>
   </section>
 </main>

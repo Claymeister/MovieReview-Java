@@ -3,9 +3,13 @@ package com.moviereview.web.service.impl;
 import com.moviereview.web.dto.ReviewDto;
 import com.moviereview.web.models.Movie;
 import com.moviereview.web.models.Review;
+import com.moviereview.web.models.UserEntity;
 import com.moviereview.web.repository.MovieRepository;
 import com.moviereview.web.repository.ReviewRepository;
+import com.moviereview.web.repository.UserRepository;
+import com.moviereview.web.security.SecurityUtil;
 import com.moviereview.web.service.ReviewService;
+import com.moviereview.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +23,13 @@ import static com.moviereview.web.mapper.ReviewMapper.mapToReviewDto;
 public class ReviewServiceImpl implements ReviewService {
     private ReviewRepository reviewRepository;
     private MovieRepository movieRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, MovieRepository movieRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, MovieRepository movieRepository, UserRepository userRepository) {
         this.reviewRepository = reviewRepository;
         this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -31,12 +37,15 @@ public class ReviewServiceImpl implements ReviewService {
         Movie movie = movieRepository.findById(movieId).get();
         Review review = mapToReview(reviewDto);
         review.setMovie(movie);
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = userRepository.findByUsername(username);
+        review.setCreatedBy(user);
         reviewRepository.save(review);
     }
 
     @Override
     public List<ReviewDto> findAllReviews() {
-        List<Review> reviews = reviewRepository.findAll();
+        List<Review> reviews = reviewRepository.findAllByOrderByUpdatedOnDesc();
         return reviews.stream().map(review -> mapToReviewDto(review)).collect(Collectors.toList());
     }
 

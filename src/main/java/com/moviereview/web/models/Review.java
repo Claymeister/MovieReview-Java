@@ -21,6 +21,7 @@ public class Review {
     private Long id;
     private String title;
     private int score;
+    @Column(columnDefinition = "TEXT")
     private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;

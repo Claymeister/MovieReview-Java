@@ -10,21 +10,37 @@
   <section layout:fragment="body" class="py-5">
     <div class="container px-5 my-5">
       <div class="text-center mb-5">
-        <h1 class="fw-bolder">Find Running Reviews</h1>
-        <p class="lead fw-normal text-muted mb-0">Find running reviews near you</p>
+        <h1 class="fw-bolder">Find Reviews</h1>
+        <p class="lead fw-normal text-muted mb-0">Make an account to post your own reviews!</p>
       </div>
-      <div class="row gx-5">
-        <div th:each="review :${reviews}" class="col-lg-6 mb-2">
-          <div class="position-relative mb-3">
-            <img class="img-fluid rounded-3 mb-3" th:src="${review.photoUrl}" alt="..." />
-            <a th:text="${review.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!"></a>
-          </div>
-          <a th:href="@{/reviews/{reviewId}(reviewId=${review.id})}" class="btn btn-primary">View</a>
-          <div th:if="${user.id} == ${review.movie.createdBy.id}">
-            <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-primary">Edit</a>
-          </div>
-        </div>
-      </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>User</th>
+          <th>Movie</th>
+          <th>Score</th>
+          <th>Description</th>
+          <th>Last Updated</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review : ${reviews}">
+          <td th:text="${review.createdBy.username}"></td>
+          <td th:text="${review.movie.title}"></td>
+          <td th:text="${review.score}"></td>
+          <td th:text="${review.content}"></td>
+          <td th:text="${review.updatedOn}"></td>
+          <td>
+            <a th:href="@{/reviews/{reviewId}(reviewId=${review.id})}" class="btn btn-primary ms-2">View</a>
+            <div th:if="${user.id} == ${review.movie.createdBy.id}">
+              <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-primary ms-2">Edit</a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
     </div>
   </section>
 </main>

@@ -24,9 +24,10 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String photoUrl;
-    private String content;
     private String genre;
+    private String photoUrl;
+    @Column(columnDefinition = "TEXT")
+    private String content;
     private LocalDate releaseDate;
 
     @CreationTimestamp

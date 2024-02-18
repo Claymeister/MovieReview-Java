@@ -13,25 +13,46 @@
                 You are registered successfully!
             </div>
             <div class="text-center mb-5">
-                <h1 class="fw-bolder">Find Running Movies</h1>
-                <p class="lead fw-normal text-muted mb-0">Groups of passionate near you</p>
+                <h1 class="fw-bolder">Find Movies</h1>
+                <p class="lead fw-normal text-muted mb-0">Can't find a movie? Make an account and add it!</p>
             </div>
             <div class="row gx-5">
                 <div>
                     <form th:action="@{/movies/search}" class="form-inline my-2 my-lg-0 mb-3">
-                        <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search running movies" aria-label="Search">
+                        <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search movies" aria-label="Search">
                     </form>
                 </div>
-                <div th:each="movie :${movies}" class="col-lg-6 mb-2">
-                    <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${movie.photoUrl}" alt="..." />
-                        <a th:text="${movie.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
-                    </div>
-                    <a class="btn btn-primary" th:href="@{/movies/{movieId}(movieId=${movie.id})}">View</a>
-                    <div th:if="${user.id} == ${movie.createdBy.id}">
-                        <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
-                    </div>
-                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Poster</th>
+                        <th>Description</th>
+                        <th>Genre</th>
+                        <th>Released</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="movie : ${movies}">
+                        <td th:text="${movie.title}"></td>
+                        <td>
+                            <img th:src="${movie.photoUrl}" alt="..." class="img-fluid rounded-3 mb-3" width="100">
+                        </td>
+                        <td th:text="${movie.content}"></td>
+                        <td th:text="${movie.genre}"></td>
+                        <td th:text="${movie.releaseDate}"></td>
+                        <td>
+                            <a class="btn btn-primary ms-2" th:href="@{/movies/{movieId}(movieId=${movie.id})}">View</a>
+                            <div th:if="${user.id} == ${movie.createdBy.id}">
+                                <a class="btn btn-primary ms-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
             </div>
         </div>
     </section>
