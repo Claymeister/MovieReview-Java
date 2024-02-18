@@ -17,25 +17,25 @@
           <div class="card mb-4">
             <a href="#!"><img class="card-img-top" th:src="${movie.photoUrl}" alt="..." width="300" /></a>
             <div class="card-body">
-              <div class="small text-muted" th:text="${movie.createdOn}"></div>
+              <div class="small text-muted" th:text="${movie.updatedOn}"></div>
               <h2 class="card-title" th:text="${movie.title}">About this movie</h2>
               <p class="card-text" th:text="${movie.content}"></p>
               <div th:if="${user.id} == ${movie.createdBy.id}">
-              <a class="btn btn-primary ms-2" th:href="@{/movies/{movieId}/delete(movieId=${movie.id})}">Delete</a>
-              <a class="btn btn-primary ms-2" th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Create Review</a>
+                <a class="btn btn-primary " th:href="@{/movies/{movieId}/delete(movieId=${movie.id})}">Delete</a>
               </div>
+              <a class="btn btn-primary " th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Create Review</a>
             </div>
           </div>
           <!-- Nested row for non-featured blog posts-->
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-md-6">
               <!-- Blog post-->
               <div th:each="review :${movie.reviews}" class="card mb-4">
                 <div class="card-body">
-                  <div class="small text-muted">January 1, 2022</div>
-                  <h2 th:text="${review.title}"class="card-title h4"></h2>
+                  <div class="small text-muted" th:text="${review.createdBy.username + ' - ' + review.updatedOn}">Date</div>
+                  <h2 th:text="${review.score + '/10: ' + review.title}" class="card-title h4"></h2>
                   <p class="card-text" th:text="${review.content}">Not much said.</p>
-                  <a class="btn btn-primary ms-2" th:href="@{/reviews/{reviewId}(reviewId=${review.id})}">More</a>
+                  <a class="btn btn-primary " th:href="@{/reviews/{reviewId}(reviewId=${review.id})}">More</a>
                 </div>
               </div>
             </div>

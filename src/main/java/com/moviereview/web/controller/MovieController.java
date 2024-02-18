@@ -7,6 +7,7 @@ import com.moviereview.web.security.SecurityUtil;
 import com.moviereview.web.service.MovieService;
 import com.moviereview.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,7 +54,7 @@ public class MovieController {
         model.addAttribute("movie", movieDto);
         return "movies-detail";
     }
-
+    @Secured("ROLE_USER")
     @GetMapping("/movies/new")
     public String createMovieForm(Model model) {
         Movie movie = new Movie();
@@ -61,6 +62,7 @@ public class MovieController {
         return "movies-create";
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/movies/{movieId}/delete")
     public String deleteMovie(@PathVariable("movieId")Long movieId) {
         movieService.delete(movieId);
@@ -70,9 +72,16 @@ public class MovieController {
     @GetMapping("/movies/search")
     public String searchMovie(@RequestParam(value = "query") String query, Model model) {
         List<MovieDto> movies = movieService.searchMovies(query);
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = null;
+        if(username != null) {
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("movies", movies);
         return "movies-list";
     }
+
 
     @PostMapping("/movies/new")
     public String saveMovie(@Valid @ModelAttribute("movie") MovieDto movieDto, BindingResult result, Model model) {

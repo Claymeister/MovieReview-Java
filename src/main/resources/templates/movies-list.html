@@ -19,7 +19,7 @@
             <div class="row gx-5">
                 <div>
                     <form th:action="@{/movies/search}" class="form-inline my-2 my-lg-0 mb-3">
-                        <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search movies" aria-label="Search">
+                        <input name="query" class="form-control mr-s mb-5" type="search" placeholder="Search movies" aria-label="Search">
                     </form>
                 </div>
                 <table class="table">
@@ -37,15 +37,15 @@
                     <tr th:each="movie : ${movies}">
                         <td th:text="${movie.title}"></td>
                         <td>
-                            <img th:src="${movie.photoUrl}" alt="..." class="img-fluid rounded-3 mb-3" width="100">
+                            <img th:src="${movie.photoUrl}" alt="..." class="img-fluid rounded-3 mb-3" width="128">
                         </td>
                         <td th:text="${movie.content}"></td>
                         <td th:text="${movie.genre}"></td>
                         <td th:text="${movie.releaseDate}"></td>
                         <td>
-                            <a class="btn btn-primary ms-2" th:href="@{/movies/{movieId}(movieId=${movie.id})}">View</a>
+                            <a class="btn btn-primary  mb-2" th:href="@{/movies/{movieId}(movieId=${movie.id})}">View</a>
                             <div th:if="${user.id} == ${movie.createdBy.id}">
-                                <a class="btn btn-primary ms-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                                <a class="btn btn-primary  mb-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
                             </div>
                         </td>
                     </tr>

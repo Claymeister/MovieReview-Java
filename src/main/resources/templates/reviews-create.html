@@ -8,26 +8,29 @@
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
   <section layout:fragment="body" class="py-5">
+    <div class="text-center mb-5">
+      <h1 class="fw-bolder">Adding a Review</h1>
+    </div>
     <div class="container">
       <form role="form" method="post" th:action="@{/reviews/{movieId}(movieId=${movieId})}" th:object="${review}">
         <div class="form-group">
           <label for="title">Title</label>
           <input
                   type="text"
-                  class="form-control"
+                  class="form-control col-md-6"
                   id="title" name="title"
                   th:field="*{title}"
-                  placeholder="Review title">
+                  placeholder="Title your review.">
           <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
         </div>
         <div class="form-group">
           <label for="score">Score</label>
           <input
                   type="number" min="1" max="10"
-                  class="form-control"
+                  class="form-control col-md-6"
                   id="score" name="score"
                   th:field="*{score}"
-                  placeholder="Review score">
+                  placeholder="Out of 10, how much did you like the movie?">
           <p th:if="${#fields.hasErrors('score')}" class="text-danger" th:errors="*{score}"></p>
         </div>
         <div class="form-group">
@@ -38,10 +41,10 @@
                   name="content"
                   th:field="*{content}"
                   rows="5"
-                  placeholder="Review content"></textarea>
+                  placeholder="Describe your thoughts on the movie."></textarea>
           <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
         </div>
-        <button type="submit" class="btn btn-primary ms-2">Create</button>
+        <button type="submit" class="btn btn-primary ">Create</button>
       </form>
     </div>
   </section>
