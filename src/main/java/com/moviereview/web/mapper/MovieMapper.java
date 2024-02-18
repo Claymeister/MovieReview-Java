@@ -12,9 +12,11 @@ public class MovieMapper {
         Movie movieDto = Movie.builder()
                 .id(movie.getId())
                 .title(movie.getTitle())
+                .genre(movie.getGenre())
                 .photoUrl(movie.getPhotoUrl())
                 .content(movie.getContent())
                 .createdBy(movie.getCreatedBy())
+                .releaseDate(movie.getReleaseDate())
                 .createdOn(movie.getCreatedOn())
                 .updatedOn(movie.getUpdatedOn())
                 .build();

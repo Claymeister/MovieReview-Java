@@ -7,13 +7,12 @@ public class ReviewMapper {
     public static Review mapToReview(ReviewDto reviewDto) {
         return Review.builder()
                 .id(reviewDto.getId())
-                .name(reviewDto.getName())
-                .startTime(reviewDto.getStartTime())
-                .endTime(reviewDto.getEndTime())
-                .type(reviewDto.getType())
-                .photoUrl(reviewDto.getPhotoUrl())
+                .title(reviewDto.getTitle())
+                .score(reviewDto.getScore())
+                .content(reviewDto.getContent())
                 .createdOn(reviewDto.getCreatedOn())
                 .updatedOn(reviewDto.getUpdatedOn())
+                .createdBy(reviewDto.getCreatedBy())
                 .movie(reviewDto.getMovie())
                 .build();
     }
@@ -21,13 +20,12 @@ public class ReviewMapper {
     public static ReviewDto mapToReviewDto(Review review) {
         return ReviewDto.builder()
                 .id(review.getId())
-                .name(review.getName())
-                .startTime(review.getStartTime())
-                .endTime(review.getEndTime())
-                .type(review.getType())
-                .photoUrl(review.getPhotoUrl())
+                .title(review.getTitle())
+                .score(review.getScore())
+                .content(review.getContent())
                 .createdOn(review.getCreatedOn())
                 .updatedOn(review.getUpdatedOn())
+                .createdBy(review.getCreatedBy())
                 .movie(review.getMovie())
                 .build();
     }

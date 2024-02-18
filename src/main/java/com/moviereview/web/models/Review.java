@@ -19,16 +19,17 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String type;
-    private String photoUrl;
+    private String title;
+    private int score;
+    private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private UserEntity createdBy;
     @ManyToOne
     @JoinColumn(name="movie_id", nullable = false)
     private Movie movie;

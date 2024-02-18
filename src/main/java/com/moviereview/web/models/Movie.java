@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class Movie {
     private String title;
     private String photoUrl;
     private String content;
+    private String genre;
+    private LocalDate releaseDate;
 
     @CreationTimestamp
     private LocalDateTime createdOn;
