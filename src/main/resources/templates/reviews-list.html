@@ -4,7 +4,7 @@
         layout:decorate="~{layout}"
         xmlns:sec="http://www.thymeleaf.org">
 <head>
-  <title>Review List</title>
+  <title>Review Index</title>
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
@@ -45,13 +45,16 @@
           <td th:text="${review.updatedOn}"></td>
           <td>
             <div th:if="${user.id} == ${review.createdBy.id}">
-              <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-primary">Edit</a>
+              <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-warning">Edit</a>
               <div sec:authorize="!hasRole('ROLE_ADMIN')">
-                <a class="btn btn-primary mt-2" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+                <a class="btn btn-danger mt-2" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}"
+                   onclick="return confirm('Are you sure you want to delete this review?')">Delete</a>
               </div>
+
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
-              <a class="btn btn-primary mt-2" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+              <a class="btn btn-danger mt-2" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}"
+                 onclick="return confirm('Are you sure you want to delete this review?')">Delete</a>
             </div>
           </td>
         </tr>

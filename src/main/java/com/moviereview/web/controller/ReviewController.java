@@ -44,25 +44,25 @@ public class ReviewController {
     @GetMapping("/reviews")
     public String reviewList(Model model) {
         UserEntity user = new UserEntity();
-        List<ReviewDto> reviews = reviewService.findAllReviews();
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-        }
+        if(username != null) user = userService.findByUsername(username);
         model.addAttribute("user", user);
+
+        List<ReviewDto> reviews = reviewService.findAllReviews();
         model.addAttribute("reviews", reviews);
         return "reviews-list";
     }
 
+    //DEPRECATED, NO IDEA WHAT TO PUT IN THERE
     @GetMapping("/reviews/{reviewId}")
     public String viewReview(@PathVariable("reviewId")Long reviewId, Model model) {
-        ReviewDto reviewDto = reviewService.findByReviewId(reviewId);
         UserEntity user = new UserEntity();
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {user = userService.findByUsername(username);}
-        model.addAttribute("movie", reviewDto.getMovie());
+        if(username != null) user = userService.findByUsername(username);
         model.addAttribute("user", user);
+
+        ReviewDto reviewDto = reviewService.findByReviewId(reviewId);
+        model.addAttribute("movie", reviewDto.getMovie());
         model.addAttribute("review", reviewDto);
         return "reviews-detail";
     }
@@ -131,5 +131,4 @@ public class ReviewController {
         }
         return "redirect:/login";
     }
-
 }

@@ -35,16 +35,16 @@ public class MovieController {
         this.userService = userService;
         this.movieService = movieService;
         this.roleRepository = roleRepository;
-        this.currentSortBy = "title_desc";
+        this.currentSortBy = "release_asc";
         this.currentTitled = "";
         this.currentGenre = "";
     }
 
     @GetMapping("/movies")
     public String listMovies(Model model,
-                             @RequestParam(value = "sortBy") String sortBy,
-                             @RequestParam(value = "titled") String titled,
-                             @RequestParam(value = "genre") String genre) {
+                             @RequestParam(value = "sortBy", required = false) String sortBy,
+                             @RequestParam(value = "titled", required = false) String titled,
+                             @RequestParam(value = "genre", required = false) String genre) {
         UserEntity user = new UserEntity();
         String username = SecurityUtil.getSessionUser();
         if(username != null) user = userService.findByUsername(username);
@@ -91,7 +91,7 @@ public class MovieController {
         return "movies-create";
     }
 
-    @Secured("ROLE_USER")
+    @Secured("ROLE_ADMIN")
     @GetMapping("/movies/{movieId}/delete")
     public String deleteMovie(@PathVariable("movieId")Long movieId) {
         movieService.delete(movieId);
@@ -119,7 +119,7 @@ public class MovieController {
             model.addAttribute("movie", movie);
             return "movies-edit";
         }
-        return "movies-list";
+        return "redirect:/login";
     }
     @PostMapping("/movies/{movieId}/edit")
     public String updateMovie(@PathVariable("movieId") Long movieId,

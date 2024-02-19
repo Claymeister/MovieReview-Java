@@ -4,7 +4,7 @@
         layout:decorate="~{layout}"
         xmlns:sec="http://www.thymeleaf.org">
 <head>
-  <title>Review detail</title>
+  <title>Review Detail</title>
 </head>
 <body class="d-flex flex-column">
 
@@ -30,11 +30,13 @@
             <div th:if="${user.id} == ${review.createdBy.id}">
               <a class="btn btn-primary mb-2" th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}">Edit</a>
               <div sec:authorize="!hasRole('ROLE_ADMIN')">
-                <a class="btn btn-primary " th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+                <a class="btn btn-danger" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}"
+                   onclick="return confirm('Are you sure you want to delete this review?')">Delete</a>
               </div>
             </div>
             <div sec:authorize="hasRole('ROLE_ADMIN')">
-              <a class="btn btn-primary " th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
+              <a class="btn btn-danger" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}"
+                 onclick="return confirm('Are you sure you want to delete this review?')">Delete</a>
             </div>
         </div>
       </div>
