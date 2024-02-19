@@ -8,7 +8,7 @@
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-    <section layout:fragment="body" class="py-5">
+    <section layout:fragment="body" class="py-5 font-white">
         <div class="container px-5 my-5">
             <div th:if="${param.success}" class="alert alert-success">
                 You are registered successfully!
@@ -32,7 +32,7 @@
                     .table td {vertical-align: middle;}
                     .table .btn {vertical-align: middle;}
                 </style>
-                <table class="table">
+                <table class="table font-white tbl-background">
                     <thead>
                     <tr>
                         <th>Title</th>

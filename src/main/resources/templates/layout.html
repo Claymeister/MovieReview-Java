@@ -16,7 +16,7 @@
   <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">MovieReview</title>
 </head>
 <header class="fixed-top">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark border-bottom layout">
     <div class="container px-5">
       <a class="navbar-brand" th:href="@{/}">MovieReview</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -24,20 +24,20 @@
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" th:href="@{/movies}">Find Movies</a></li>
           <li class="nav-item"><a class="nav-link" th:href="@{/reviews}">Find Reviews</a></li>
-          <li sec:authorize="!isAuthenticated()"  class="nav-item"><a class="nav-link me-2 btn btn-primary " th:href="@{/login}">Login</a></li>
-          <li sec:authorize="!isAuthenticated()"  class="nav-item"><a class="nav-link btn btn-primary " th:href="@{/register}">Register</a></li>
-          <li sec:authorize="isAuthenticated()"  class="nav-item"><a class="nav-link btn btn-primary " th:href="@{/logout}">Logout</a></li>
+          <li sec:authorize="isAuthenticated()"  class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+          <li sec:authorize="!isAuthenticated()"  class="nav-item"><a class="nav-link me-2 btn btn-primary" th:href="@{/login}">Login</a></li>
+          <li sec:authorize="!isAuthenticated()"  class="nav-item"><a class="nav-link btn btn-primary" th:href="@{/register}">Register</a></li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
 
-<body layout:fragment="body" class="mb-5 mt-5" style="padding: 50px 10px"></body>
+<body layout:fragment="body" class="mb-5 mt-5 font-white" style="padding: 50px 10px"></body>
 
 </main>
 <!-- Footer-->
-<footer class="fixed-bottom bg-dark py-4 mt-auto">
+<footer class="fixed-bottom py-2 mt-auto border-top layout">
   <div class="container px-5">
     <div class="row align-items-center justify-content-between flex-column flex-sm-row">
       <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; MovieReviews 2024</div></div>

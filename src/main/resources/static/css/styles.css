@@ -82,9 +82,10 @@ body {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
-  color: var(--bs-body-color);
+  color: white !important;
   text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
+  background-image: url('siata.png');
+  background-color: #111;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -11307,4 +11308,21 @@ html {
   background-position: center;
   background-repeat: no-repeat;
   min-height: 15rem;
+}
+
+.font-white {
+  color: white !important;
+}
+
+.tbl-background {
+  color: white !important;
+  background-color: #111 !important;
+  border: 10px solid black;
+}
+
+.layout {
+  color: white !important;
+  background-color: #111;
+  padding: 10px 0;
+  margin-top: auto;
 }

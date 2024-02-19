@@ -7,47 +7,49 @@
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-    <section layout:fragment="body" class="py-5" style="padding: 50px 10px">
-        <div class="text-center mb-5">
-            <h1 class="fw-bolder">Editing a Review</h1>
-            <p class="lead fw-normal text-muted mb-0" th:text="${review.movie.title}">Title</p>
-        </div>
-        <div class="container">
-            <form role="form" method="post" th:action="@{/reviews/{reviewId}/edit(reviewId=${reviewId})}" th:object="${review}">
-                <div class="form-group mb-3">
-                    <label for="title">Title</label>
-                    <input
-                            type="text"
-                            class="form-control col-md-6"
-                            id="title"
-                            name="title"
-                            th:field="*{title}"
-                            placeholder="Title your review.">
-                    <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="score">Score</label>
-                    <input
-                            type="number" min="1" max="10"
-                            class="form-control col-md-6"
-                            id="score"
-                            name="score"
-                            th:field="*{score}"
-                            placeholder="Out of 10, how much did you like the movie?">
-                    <p th:if="${#fields.hasErrors('score')}" class="text-danger" th:errors="*{score}"></p>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="content">Content</label>
-                    <textarea
-                            class="form-control"
-                            id="content"
-                            name="content"
-                            th:field="*{content}"
-                            placeholder="Describe your thoughts on the movie."></textarea>
-                    <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
-                </div>
-                <button type="submit" class="btn btn-primary ">Update</button>
-            </form>
+    <section layout:fragment="body" class="py-5">
+        <div style="padding: 50px 10px">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Editing a Review</h1>
+                <p class="lead fw-normal text-muted mb-0" th:text="${review.movie.title}">Title</p>
+            </div>
+            <div class="container">
+                <form role="form" method="post" th:action="@{/reviews/{reviewId}/edit(reviewId=${reviewId})}" th:object="${review}">
+                    <div class="form-group mb-3">
+                        <label for="title">Title</label>
+                        <input
+                                type="text"
+                                class="form-control col-md-6"
+                                id="title"
+                                name="title"
+                                th:field="*{title}"
+                                placeholder="Title your review.">
+                        <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="score">Score</label>
+                        <input
+                                type="number" min="1" max="10"
+                                class="form-control col-md-6"
+                                id="score"
+                                name="score"
+                                th:field="*{score}"
+                                placeholder="Out of 10, how much did you like the movie?">
+                        <p th:if="${#fields.hasErrors('score')}" class="text-danger" th:errors="*{score}"></p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="content">Content</label>
+                        <textarea
+                                class="form-control"
+                                id="content"
+                                name="content"
+                                th:field="*{content}"
+                                placeholder="Describe your thoughts on the movie."></textarea>
+                        <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary ">Update</button>
+                </form>
+            </div>
         </div>
     </section>
 </main>

@@ -23,10 +23,10 @@
         .table td {vertical-align: middle;}
         .table .btn {vertical-align: middle;}
       </style>
-      <table class="table">
+      <table class="table tbl-background">
         <thead>
         <tr>
-          <th>User</th>
+          <th>Author</th>
           <th>Movie</th>
           <th>Score</th>
           <th>Title</th>
@@ -44,9 +44,8 @@
           <td th:text="${review.content}"></td>
           <td th:text="${review.updatedOn}"></td>
           <td>
-            <a th:href="@{/reviews/{reviewId}(reviewId=${review.id})}" class="btn btn-primary">View-tbr</a>
             <div th:if="${user.id} == ${review.createdBy.id}">
-              <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-primary mt-2">Edit</a>
+              <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}" class="btn btn-primary">Edit</a>
               <div sec:authorize="!hasRole('ROLE_ADMIN')">
                 <a class="btn btn-primary mt-2" th:href="@{/reviews/{reviewId}/delete(reviewId=${review.id})}">Delete</a>
               </div>
@@ -58,7 +57,6 @@
         </tr>
         </tbody>
       </table>
-
     </div>
   </section>
 </main>

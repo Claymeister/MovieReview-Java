@@ -6,70 +6,84 @@
 </head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
-  <section layout:fragment="body" class="py-5" style="padding: 50px 10px">
-    <div class="text-center mb-5">
-      <h1 class="fw-bolder">Adding a Movie</h1>
-    </div>
-    <div class="container">
-      <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="title">Title</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="title"
-                    name="title"
-                    th:field="*{title}"
-                    placeholder="Title">
-            <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+  <section layout:fragment="body" class="py-5" >
+    <div style="padding: 50px 10px">
+      <div class="text-center mb-5">
+        <h1 class="fw-bolder">Adding a Movie</h1>
+      </div>
+      <div class="container">
+        <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="title">Title</label>
+              <input
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      name="title"
+                      th:field="*{title}"
+                      placeholder="Title">
+              <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="genre">Genre</label>
+              <select class="form-control" id="genre" name="genre" th:field="*{genre}">
+                <option value="">Select Genre</option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Animation">Animation</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Crime">Crime</option>
+                <option value="Drama">Drama</option>
+                <option value="Family">Family</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Horror">Horror</option>
+                <option value="Musical">Musical</option>
+                <option value="Romance">Romance</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Thriller">Thriller</option>
+                <option value="War">War</option>
+                <option value="Western">Western</option>
+                <option value="Other">Other</option>
+              </select>
+              <p th:if="${#fields.hasErrors('genre')}" class="text-danger" th:errors="*{genre}"></p>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="releaseDate">Release Date</label>
+              <input
+                      type="date"
+                      class="form-control"
+                      id="releaseDate"
+                      name="releaseDate"
+                      th:field="*{releaseDate}">
+              <p th:if="${#fields.hasErrors('releaseDate')}" class="text-danger" th:errors="*{releaseDate}"></p>
+            </div>
+            <div class="form-group">
+              <label for="photoUrl">Poster Photo URL</label>
+              <input
+                      type="text"
+                      class="form-control"
+                      id="photoUrl"
+                      name="photoUrl"
+                      th:field="*{photoUrl}"
+                      placeholder="Link to the photo of the movie's poster">
+              <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
+            </div>
+            <div class="form-group mb-3">
+              <label for="content">Description</label>
+              <textarea
+                      type="text"
+                      class="form-control"
+                      id="content"
+                      name="content"
+                      th:field="*{content}"
+                      placeholder="What's the movie about?"></textarea>
+              <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+            </div>
           </div>
-          <div class="form-group col-md-6">
-            <label for="genre">Genre</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="genre"
-                    name="genre"
-                    th:field="*{genre}"
-                    placeholder="Genre">
-            <p th:if="${#fields.hasErrors('genre')}" class="text-danger" th:errors="*{genre}"></p>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="releaseDate">Release Date</label>
-            <input
-                    type="date"
-                    class="form-control"
-                    id="releaseDate"
-                    name="releaseDate"
-                    th:field="*{releaseDate}">
-            <p th:if="${#fields.hasErrors('releaseDate')}" class="text-danger" th:errors="*{releaseDate}"></p>
-          </div>
-          <div class="form-group">
-            <label for="photoUrl">Poster Photo URL</label>
-            <input
-                    type="text"
-                    class="form-control"
-                    id="photoUrl"
-                    name="photoUrl"
-                    th:field="*{photoUrl}"
-                    placeholder="Link to the photo of the movie's poster">
-            <p th:if="${#fields.hasErrors('photoUrl')}" class="text-danger" th:errors="*{photoUrl}"></p>
-          </div>
-          <div class="form-group mb-3">
-            <label for="content">Description</label>
-            <textarea
-                    type="text"
-                    class="form-control"
-                    id="content"
-                    name="content"
-                    th:field="*{content}"
-                    placeholder="What's the movie about?"></textarea>
-            <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary ">Create</button>
-      </form>
+          <button type="submit" class="btn btn-primary ">Create</button>
+        </form>
+      </div>
     </div>
   </section>
 </main>

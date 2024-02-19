@@ -10,7 +10,7 @@
 
 <section layout:fragment="body">
     <!-- Page content-->
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 font-white">
         <div class="row">
             <!-- Blog entries-->
             <!-- Featured blog post-->
@@ -18,7 +18,7 @@
                 .table td {vertical-align: middle;}
                 .table .btn {vertical-align: middle;}
             </style>
-            <table class="table">
+            <table class="table font-white tbl-background">
                 <thead>
                 <tr>
                     <th>Poster</th>
@@ -35,18 +35,18 @@
                     <td>
                         <div th:if="${user.id} == ${movie.createdBy.id}">
                             <div sec:authorize="!hasRole('ROLE_ADMIN')">
-                                <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                                <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
                             </div>
                         </div>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
+                            <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
                             <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/delete(movieId=${movie.id})}">Delete</a>
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <table class="table">
+            <table class="table font-white tbl-background">
                 <thead>
                 <tr>
                     <th>Title</th>
@@ -69,13 +69,12 @@
             </div>
             <div class="col-lg-12">
                 <div sec:authorize="hasRole('ROLE_USER')">
-                <a class="btn btn-primary mt-2 mb-2 w-100" th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Add your own Review</a>
+                    <a class="btn btn-primary mt-2 mb-2 w-100" th:href="@{/reviews/{movieId}/new(movieId=${movie.id})}">Add your own Review</a>
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->
-            <div class="row">
                 <!-- Blog post-->
-                <table class="table">
+                <table class="table font-white tbl-background">
                     <thead>
                     <tr>
                         <th>User</th>
@@ -96,8 +95,6 @@
                         <td th:text="${review.content}"></td>
                         <td th:text="${review.updatedOn}"></td>
                         <td>
-                            <a th:href="@{/reviews/{reviewId}(reviewId=${review.id})}"
-                               class="btn btn-primary">View-tbr</a>
                             <div th:if="${user.id} == ${review.createdBy.id}">
                                 <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.id})}"
                                    class="btn btn-primary mt-2">Edit</a>
@@ -114,7 +111,6 @@
                     </tr>
                     </tbody>
                 </table>
-            </div>
         </div>
     </div>
 </section>
