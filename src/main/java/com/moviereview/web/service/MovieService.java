@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MovieService {
     List<MovieDto> findAllMovies();
+    List<MovieDto> findMoviesByTitleAndGenre(String titled, String genre);
     Movie saveMovie(MovieDto movieDto);
     MovieDto findMovieById(Long movieId);
     void updateMovie(MovieDto movie);

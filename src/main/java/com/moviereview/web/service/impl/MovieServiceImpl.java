@@ -32,6 +32,11 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieRepository.findAll();
         return movies.stream().map((movie) -> mapToMovieDto(movie)).collect(Collectors.toList());
     }
+    @Override
+    public List<MovieDto> findMoviesByTitleAndGenre(String titled, String genre) {
+        List<Movie> movies = movieRepository.findMoviesByTitleAndGenre(titled, genre);
+        return movies.stream().map((movie) -> mapToMovieDto(movie)).collect(Collectors.toList());
+    }
 
     @Override
     public Movie saveMovie(MovieDto movieDto) {

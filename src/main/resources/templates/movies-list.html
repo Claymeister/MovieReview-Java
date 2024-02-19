@@ -10,19 +10,32 @@
 <main class="flex-shrink-0">
     <section layout:fragment="body" class="py-5 font-white">
         <div class="container px-5 my-5">
-            <div th:if="${param.success}" class="alert alert-success">
-                You are registered successfully!
-            </div>
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">Find Movies</h1>
                 <p class="lead fw-normal text-muted mb-0">Can't find a movie? Make an account and add it!</p>
             </div>
             <div class="row gx-5">
-                <div>
-                    <form th:action="@{/movies/search}" class="form-inline my-2 my-lg-0 mb-2">
-                        <input name="query" class="form-control mr-s mb-5" type="search" placeholder="Search movies" aria-label="Search">
-                    </form>
-                </div>
+                <form th:action="@{/movies}" class="form-inline my-2 my-lg-0 mb-2">
+                    <div class="row">
+                        <div class="col-lg-11">
+                            <div class="input-group">
+                                <input name="titled" class="form-control mr-s" type="search" placeholder="Search by title" aria-label="Search by title" th:value="${currentTitled}">
+                                <select name="genre" class="form-control mr-s">
+                                    <option value="" th:selected="${currentGenre == ''}">All Genres</option>
+                                    <option value="Action" th:selected="${currentGenre == 'Action'}">Action</option>
+                                    <option value="Adventure" th:selected="${currentGenre == 'Adventure'}">Adventure</option>
+                                    <option value="Comedy" th:selected="${currentGenre == 'Comedy'}">Comedy</option>
+                                    <option value="Drama" th:selected="${currentGenre == 'Drama'}">Drama</option>
+                                    <!-- Add more genres as needed -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <input type="hidden" name="sortBy" th:value="${currentSortBy}">
+                            <button class="btn btn-primary ml-2" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
                 <div class="col-lg-12">
                     <div sec:authorize="hasRole('ROLE_USER')">
                         <a class="btn btn-primary mb-2 w-100" th:href="@{/movies/new}">Add a new Movie</a>
@@ -36,19 +49,15 @@
                     <thead>
                     <tr>
                         <th>
-                            <form th:action="@{/movies/sort}" class="form-inline my-2 my-lg-0 mb-2">
-                                <input type="hidden" name="query" value="title">
-                                <button class="nav-link" type="submit" aria-label="Sort by Title">Title</button>
-                            </form>
+                            <a th:href="@{/movies(sortBy=${currentSortBy == 'title_asc' ? 'title_desc' : 'title_asc'},
+                            titled=${currentTitled}, genre=${currentGenre})}">Title</a>
                         </th>
                         <th>Poster</th>
                         <th>Description</th>
                         <th>Genre</th>
                         <th>
-                            <form th:action="@{/movies/sort}" class="form-inline my-2 my-lg-0 mb-2">
-                                <input type="hidden" name="query" value="releaseDate">
-                                <button class="nav-link" type="submit" aria-label="Sort by Release Date">Released</button>
-                            </form>
+                            <a th:href="@{/movies(sortBy=${currentSortBy == 'release_asc' ? 'release_desc' : 'release_asc'},
+                            titled=${currentTitled}, genre=${currentGenre})}">Released</a>
                         </th>
                         <th></th>
                     </tr>
@@ -77,8 +86,6 @@
                     </tr>
                     </tbody>
                 </table>
-
-
             </div>
         </div>
     </section>

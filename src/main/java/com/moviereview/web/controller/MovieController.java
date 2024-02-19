@@ -26,26 +26,48 @@ public class MovieController {
     private MovieService movieService;
     private UserService userService;
     private RoleRepository roleRepository;
-    private boolean order;
+    private String currentSortBy;
+    private String currentTitled;
+    private String currentGenre;
 
     @Autowired
     public MovieController(MovieService movieService, UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
         this.movieService = movieService;
         this.roleRepository = roleRepository;
-        this.order = false;
+        this.currentSortBy = "title_desc";
+        this.currentTitled = "";
+        this.currentGenre = "";
     }
 
     @GetMapping("/movies")
-    public String listMovies(Model model) {
+    public String listMovies(Model model,
+                             @RequestParam(value = "sortBy") String sortBy,
+                             @RequestParam(value = "titled") String titled,
+                             @RequestParam(value = "genre") String genre) {
         UserEntity user = new UserEntity();
-        List<MovieDto> movies = movieService.findAllMovies();
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-        }
+        if(username != null) user = userService.findByUsername(username);
         model.addAttribute("user", user);
+
+        if(titled != null) currentTitled = titled;
+        else titled = currentTitled;
+        if(genre != null) currentGenre = genre;
+        else genre = currentGenre;
+        List<MovieDto> movies = movieService.findMoviesByTitleAndGenre(currentTitled, currentGenre);
+
+        if(sortBy != null) currentSortBy = sortBy;
+        else sortBy = currentSortBy;
+        switch(currentSortBy) {
+            case "release_asc": Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getReleaseDate))); break;
+            case "release_desc": Collections.sort(movies, Comparator.comparing(MovieDto::getReleaseDate)); break;
+            case "title_asc": Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getTitle))); break;
+            default: Collections.sort(movies, Comparator.comparing(MovieDto::getTitle)); break;
+        }
+
+        model.addAttribute("currentSortBy", currentSortBy);
+        model.addAttribute("currentTitled", currentTitled);
+        model.addAttribute("currentGenre", currentGenre);
         model.addAttribute("movies", movies);
         return "movies-list";
     }
@@ -53,13 +75,11 @@ public class MovieController {
     @GetMapping("/movies/{movieId}")
     public String movieDetail(@PathVariable("movieId") long movieId, Model model) {
         UserEntity user = new UserEntity();
-        MovieDto movieDto = movieService.findMovieById(movieId);
         String username = SecurityUtil.getSessionUser();
-        if(username != null) {
-            user = userService.findByUsername(username);
-            model.addAttribute("user", user);
-        }
+        if(username != null) user = userService.findByUsername(username);
         model.addAttribute("user", user);
+
+        MovieDto movieDto = movieService.findMovieById(movieId);
         model.addAttribute("movie", movieDto);
         return "movies-detail";
     }
@@ -77,43 +97,6 @@ public class MovieController {
         movieService.delete(movieId);
         return "redirect:/movies";
     }
-
-    @GetMapping("/movies/search")
-    public String searchMovie(@RequestParam(value = "query") String query, Model model) {
-        List<MovieDto> movies = movieService.searchMovies(query);
-        String username = SecurityUtil.getSessionUser();
-        UserEntity user = null;
-        if(username != null) {
-            user = userService.findByUsername(username);
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("movies", movies);
-        return "movies-list";
-    }
-
-    @GetMapping("/movies/sort")
-    public String sortMovie(@RequestParam(value = "query") String query, Model model) {
-        List<MovieDto> movies = movieService.findAllMovies();
-        if(query.equals("title") ) {
-            if (order) Collections.sort(movies, Comparator.comparing(MovieDto::getTitle));
-            else Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getTitle)));
-        }
-        if(query.equals("releaseDate")) {
-            if (order) Collections.sort(movies, Comparator.comparing(MovieDto::getReleaseDate));
-            else Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getReleaseDate)));
-        }
-        order = !order;
-
-        String username = SecurityUtil.getSessionUser();
-        UserEntity user = null;
-        if(username != null) {
-            user = userService.findByUsername(username);
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("movies", movies);
-        return "movies-list";
-    }
-
 
     @PostMapping("/movies/new")
     public String saveMovie(@Valid @ModelAttribute("movie") MovieDto movieDto, BindingResult result, Model model) {
