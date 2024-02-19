@@ -12,4 +12,6 @@ public interface MovieService {
     void updateMovie(MovieDto movie);
     void delete(Long movieId);
     List<MovieDto> searchMovies(String query);
+    List<MovieDto> sortDescMovies(String query);
+    List<MovieDto> sortAscMovies(String query);
 }

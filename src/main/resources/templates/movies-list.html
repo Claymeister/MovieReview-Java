@@ -35,11 +35,21 @@
                 <table class="table font-white tbl-background">
                     <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>
+                            <form th:action="@{/movies/sort}" class="form-inline my-2 my-lg-0 mb-2">
+                                <input type="hidden" name="query" value="title">
+                                <button class="nav-link" type="submit" aria-label="Sort by Title">Title</button>
+                            </form>
+                        </th>
                         <th>Poster</th>
                         <th>Description</th>
                         <th>Genre</th>
-                        <th>Released</th>
+                        <th>
+                            <form th:action="@{/movies/sort}" class="form-inline my-2 my-lg-0 mb-2">
+                                <input type="hidden" name="query" value="releaseDate">
+                                <button class="nav-link" type="submit" aria-label="Sort by Release Date">Released</button>
+                            </form>
+                        </th>
                         <th></th>
                     </tr>
                     </thead>
@@ -54,7 +64,7 @@
                         <td th:text="${movie.releaseDate}"></td>
                         <td>
                             <a class="btn btn-primary" th:href="@{/movies/{movieId}(movieId=${movie.id})}">View</a>
-                            <div th:if="${user.id} == ${movie.createdBy.id}">
+                            <div th:if="${user != null and user.id == movie.createdBy.id}">
                                 <div sec:authorize="!hasRole('ROLE_ADMIN')">
                                     <a class="btn btn-primary mt-2" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
                                 </div>

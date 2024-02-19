@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -24,12 +26,14 @@ public class MovieController {
     private MovieService movieService;
     private UserService userService;
     private RoleRepository roleRepository;
+    private boolean order;
 
     @Autowired
     public MovieController(MovieService movieService, UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
         this.movieService = movieService;
         this.roleRepository = roleRepository;
+        this.order = false;
     }
 
     @GetMapping("/movies")
@@ -77,6 +81,29 @@ public class MovieController {
     @GetMapping("/movies/search")
     public String searchMovie(@RequestParam(value = "query") String query, Model model) {
         List<MovieDto> movies = movieService.searchMovies(query);
+        String username = SecurityUtil.getSessionUser();
+        UserEntity user = null;
+        if(username != null) {
+            user = userService.findByUsername(username);
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("movies", movies);
+        return "movies-list";
+    }
+
+    @GetMapping("/movies/sort")
+    public String sortMovie(@RequestParam(value = "query") String query, Model model) {
+        List<MovieDto> movies = movieService.findAllMovies();
+        if(query.equals("title") ) {
+            if (order) Collections.sort(movies, Comparator.comparing(MovieDto::getTitle));
+            else Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getTitle)));
+        }
+        if(query.equals("releaseDate")) {
+            if (order) Collections.sort(movies, Comparator.comparing(MovieDto::getReleaseDate));
+            else Collections.sort(movies, Collections.reverseOrder(Comparator.comparing(MovieDto::getReleaseDate)));
+        }
+        order = !order;
+
         String username = SecurityUtil.getSessionUser();
         UserEntity user = null;
         if(username != null) {

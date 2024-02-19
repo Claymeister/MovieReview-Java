@@ -33,7 +33,7 @@
                     </td>
                     <td th:text="${movie.content}"></td>
                     <td>
-                        <div th:if="${user.id} == ${movie.createdBy.id}">
+                        <div th:if="${user != null and user.id == movie.createdBy.id}">
                             <div sec:authorize="!hasRole('ROLE_ADMIN')">
                                 <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">Edit</a>
                             </div>

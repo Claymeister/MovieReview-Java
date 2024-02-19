@@ -67,4 +67,15 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> movies = movieRepository.searchMovies(query);
         return movies.stream().map(movie -> mapToMovieDto(movie)).collect(Collectors.toList());
     }
+    @Override
+    public List<MovieDto> sortDescMovies(String query) {
+        List<Movie> movies = movieRepository.sortDescMovies(query);
+        return movies.stream().map(movie -> mapToMovieDto(movie)).collect(Collectors.toList());
+    };
+    @Override
+    public List<MovieDto> sortAscMovies(String query) {
+        List<Movie> movies = movieRepository.sortAscMovies(query);
+        return movies.stream().map(movie -> mapToMovieDto(movie)).collect(Collectors.toList());
+    };
+
 }
